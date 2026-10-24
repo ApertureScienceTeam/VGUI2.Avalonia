@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>VGUI2.Avalonia.RenderTool</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+    <PackageReference Include="Avalonia.Headless" Version="12.1.4" />
+    <ProjectReference Include="..\..\src\VGUI2.Avalonia\VGUI2.Avalonia.csproj" />
+    <ProjectReference Include="..\..\src\VGUI2.Avalonia.Demo\VGUI2.Avalonia.Demo.csproj" />
+  </ItemGroup>
+
+</Project>

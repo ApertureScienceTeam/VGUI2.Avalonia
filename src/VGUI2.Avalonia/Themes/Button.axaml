@@ -1,0 +1,77 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-theme + .vgui-button (class VguiButton)
+    Raised bevel; on :active the bevel flips to inset and the text indents
+    from 6px to 8px (the reference :active shifts text 2px right). The
+    indent rides on Padding so image-bearing buttons (close box) can zero
+    it and center their content; text-only buttons keep the game render's
+    ~6px ink inset.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiButton}" TargetType="vgui2:VguiButton">
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBg}" />
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Padding" Value="6,1,1,0" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame x:Name="PART_Frame"
+                            FrameStyle="Raised"
+                            Background="{TemplateBinding Background}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </vgui2:VguiFrame>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:pressed /template/ vgui2|VguiFrame#PART_Frame">
+      <Setter Property="FrameStyle" Value="Inset" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Padding" Value="8,1,1,0" />
+    </Style>
+  </ControlTheme>
+
+  <!-- Scrollbar arrow / page buttons reuse the raised look. -->
+  <ControlTheme x:Key="{x:Type RepeatButton}" TargetType="RepeatButton">
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBg}" />
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame x:Name="PART_Frame"
+                            FrameStyle="Raised"
+                            Background="{TemplateBinding Background}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </vgui2:VguiFrame>
+      </ControlTemplate>
+    </Setter>
+    <Style Selector="^:pressed /template/ vgui2|VguiFrame#PART_Frame">
+      <Setter Property="FrameStyle" Value="Inset" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

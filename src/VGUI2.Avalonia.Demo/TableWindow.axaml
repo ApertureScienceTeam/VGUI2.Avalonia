@@ -1,0 +1,18 @@
+<vgui2:VguiWindow xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:vgui2="using:VGUI2.Avalonia.Controls"
+                     x:Class="VGUI2.Avalonia.Demo.TableWindow"
+                     Title="窗口"
+                     Width="510" Height="200">
+
+  <vgui2:VguiTable x:Name="ServerTable" HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch" Margin="1">
+    <vgui2:VguiTable.Columns>
+      <vgui2:VguiTableColumn Key="Server" Header="服务器" Width="100" />
+      <vgui2:VguiTableColumn Key="Game" Header="游戏" Width="90" />
+      <vgui2:VguiTableColumn Key="Players" Header="玩家" Width="90" />
+      <vgui2:VguiTableColumn Key="Map" Header="地图" Width="90" />
+      <vgui2:VguiTableColumn Key="Ping" Header="延迟" Width="90" />
+    </vgui2:VguiTable.Columns>
+  </vgui2:VguiTable>
+</vgui2:VguiWindow>

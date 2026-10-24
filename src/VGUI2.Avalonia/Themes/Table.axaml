@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.js: VGUITable structure comment —
+      table (outer horizontal scroll)
+        vgui-table-content (inset well; min-width = cols + 18px scrollbar)
+          head (button row, sortable, col-resize grips)
+          body (own vertical scrollbar, always reserved)
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiTable}" TargetType="vgui2:VguiTable">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <!-- VGUI2.css: .vgui-table-th / .vgui-table-td are 12px -->
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSizeSmall}" />
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBgDark}" />
+    <Setter Property="HeadHeight" Value="{DynamicResource VguiRowHeight}" />
+    <Setter Property="RowHeight" Value="{DynamicResource VguiRowHeight}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled">
+          <vgui2:VguiFrame Margin="1"
+                              FrameStyle="Inset"
+                              Background="{DynamicResource VguiBrushBgDark}"
+                              EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                              EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+            <!-- Like the reference: the body (with its always-visible
+                 vertical scrollbar) spans the full table height; the opaque
+                 header row overlays it and rows scroll underneath. -->
+            <Grid x:Name="PART_Content">
+              <ScrollViewer x:Name="PART_BodyScroll"
+                            HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Visible">
+                <StackPanel>
+                  <Panel x:Name="PART_TopSpacer" Height="{TemplateBinding HeadHeight}" />
+                  <StackPanel x:Name="PART_RowsHost" Background="Transparent" />
+                </StackPanel>
+              </ScrollViewer>
+              <Grid x:Name="PART_HeaderGrid"
+                    Margin="0,0,18,0"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    Background="{DynamicResource VguiBrushBgDark}" />
+            </Grid>
+          </vgui2:VguiFrame>
+        </ScrollViewer>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui (class VguiPanel) — the base positioned panel; plain
+    transparent container that carries the family font and inherits the
+    window foreground.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiPanel}" TargetType="vgui2:VguiPanel">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Top" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <ContentPresenter x:Name="PART_ContentPresenter"
+                          Content="{TemplateBinding Content}"
+                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                          Margin="{TemplateBinding Padding}"
+                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

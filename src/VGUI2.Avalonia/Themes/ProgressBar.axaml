@@ -1,0 +1,32 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-progress-bar.vgui-theme-inner — inset well with an
+    interior track of gold blocks inset by 4px.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiProgressBar}" TargetType="vgui2:VguiProgressBar">
+    <Setter Property="Minimum" Value="0" />
+    <Setter Property="Maximum" Value="100" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame FrameStyle="Inset"
+                            Background="{DynamicResource VguiBrushBgDark}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <Border Margin="4">
+            <vgui2:VguiProgressFill
+                Percent="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                Fill="{DynamicResource VguiBrushAccent}" />
+          </Border>
+        </vgui2:VguiFrame>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

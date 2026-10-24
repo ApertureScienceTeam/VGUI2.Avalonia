@@ -1,0 +1,61 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-input input[type="text"/"password"/"number"] (class VguiTextBox)
+    Inset well with the dark interior; the template binds every TextPresenter
+    property required by the Avalonia 12 TextBox contract
+    (PART_TextPresenter + optional PART_ScrollViewer).
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiTextBox}" TargetType="vgui2:VguiTextBox">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBgDark}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource VguiBrushAccent}" />
+    <Setter Property="SelectionForegroundBrush" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinHeight" Value="20" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame FrameStyle="Inset"
+                            Background="{TemplateBinding Background}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <ScrollViewer x:Name="PART_ScrollViewer"
+                        Padding="0"
+                        HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                        VerticalScrollBarVisibility="Hidden">
+            <Panel Margin="4,2">
+              <TextBlock x:Name="PART_Watermark"
+                         Text="{TemplateBinding Watermark}"
+                         IsVisible="{TemplateBinding Text, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                         Foreground="{DynamicResource VguiBrushTextDim}"
+                         VerticalAlignment="Top" />
+              <TextPresenter x:Name="PART_TextPresenter"
+                             Text="{TemplateBinding Text}"
+                             CaretIndex="{TemplateBinding CaretIndex}"
+                             SelectionStart="{TemplateBinding SelectionStart}"
+                             SelectionEnd="{TemplateBinding SelectionEnd}"
+                             TextAlignment="{TemplateBinding TextAlignment}"
+                             TextWrapping="{TemplateBinding TextWrapping}"
+                             PasswordChar="{TemplateBinding PasswordChar}"
+                             RevealPassword="{TemplateBinding RevealPassword}"
+                             SelectionBrush="{TemplateBinding SelectionBrush}"
+                             SelectionForegroundBrush="{TemplateBinding SelectionForegroundBrush}"
+                             CaretBrush="{TemplateBinding CaretBrush}"
+                             VerticalAlignment="Top" />
+            </Panel>
+          </ScrollViewer>
+        </vgui2:VguiFrame>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

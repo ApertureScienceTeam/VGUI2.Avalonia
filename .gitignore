@@ -1,0 +1,13 @@
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+publish/
+
+# IDE
+.vs/
+.idea/
+*.user
+*.suo
+
+# Generated verification screenshots (RenderTool)
+shots/

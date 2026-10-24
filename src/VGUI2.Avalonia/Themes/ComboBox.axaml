@@ -1,0 +1,100 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-select / .vgui-select-text / .vgui-select-list
+    The dropdown list is a raised panel; rows highlight with the accent color
+    on hover and on selection.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiComboBox}" TargetType="vgui2:VguiComboBox">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="MinHeight" Value="20" />
+    <Setter Property="MaxDropDownHeight" Value="200" />
+    <Setter Property="ItemContainerTheme" Value="{StaticResource {x:Type vgui2:VguiComboBoxItem}}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid>
+          <vgui2:VguiFrame x:Name="PART_Header"
+                              FrameStyle="Inset"
+                              Background="{DynamicResource VguiBrushBgDark}"
+                              EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                              EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+            <Panel>
+              <ContentPresenter x:Name="PART_SelectedItemPresenter"
+                                Margin="4,0,24,0"
+                                IsVisible="False"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center" />
+              <TextBlock x:Name="PART_Placeholder"
+                         Margin="4,0,24,0"
+                         Foreground="{DynamicResource VguiBrushTextDim}"
+                         VerticalAlignment="Center" />
+              <LayoutTransformControl VerticalAlignment="Center" HorizontalAlignment="Right">
+                <LayoutTransformControl.LayoutTransform>
+                  <RotateTransform Angle="90" />
+                </LayoutTransformControl.LayoutTransform>
+                <TextBlock Text="›"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource VguiBrushText}"
+                           Width="20"
+                           TextAlignment="Center" />
+              </LayoutTransformControl>
+            </Panel>
+          </vgui2:VguiFrame>
+
+          <Popup x:Name="PART_Popup"
+                 IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                 IsLightDismissEnabled="True"
+                 Placement="Bottom">
+            <vgui2:VguiFrame FrameStyle="Raised"
+                                Background="{DynamicResource VguiBrushBg}"
+                                EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                                EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}"
+                                MinWidth="{Binding Bounds.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}">
+              <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                            VerticalScrollBarVisibility="Auto">
+                <ItemsPresenter Margin="1" />
+              </ScrollViewer>
+            </vgui2:VguiFrame>
+          </Popup>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!-- VGUI2.css: .vgui-select-li — 24px row, #ccc text. The gold highlight
+       is a single state owned by the combo (:highlighted): it starts on the
+       selected item, tracks the pointer inside the list and clears when the
+       pointer leaves. -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiComboBoxItem}" TargetType="vgui2:VguiComboBoxItem">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushTextDim}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Height" Value="{DynamicResource VguiListItemHeight}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Border Background="{TemplateBinding Background}">
+          <ContentPresenter Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center" />
+        </Border>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:highlighted">
+      <Setter Property="Background" Value="{DynamicResource VguiBrushAccent}" />
+      <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

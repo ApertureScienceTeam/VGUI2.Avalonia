@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>VGUI2.Avalonia</RootNamespace>
+    <AssemblyName>VGUI2.Avalonia</AssemblyName>
+    <Description>Classic VGUI2 (Source engine style) control set for Avalonia 12.</Description>
+    <Version>0.3.20</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**\*.png" />
+  </ItemGroup>
+
+</Project>

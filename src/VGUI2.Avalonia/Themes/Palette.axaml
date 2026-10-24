@@ -1,0 +1,72 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    VGUI2 palette — extracted from vgui2/src/VGUI2.css :root variables.
+    Classic Source-engine "Steam" olive theme.
+  -->
+
+  <Color x:Key="VguiColorBg">#4C5844</Color>
+  <Color x:Key="VguiColorBgLight">#829575</Color>
+  <Color x:Key="VguiColorBgDark">#353D2F</Color>
+  <Color x:Key="VguiColorBorderLight">#889180</Color>
+  <Color x:Key="VguiColorBorderDark">#282E22</Color>
+  <Color x:Key="VguiColorAccent">#BEA63B</Color>
+  <Color x:Key="VguiColorText">#FFFFFF</Color>
+  <Color x:Key="VguiColorTextDim">#CCCCCC</Color>
+  <Color x:Key="VguiColorClose">#C0392B</Color>
+
+  <!-- Checkbox scheme measured from the game render (image ref):
+       uniform gray-olive box border, light-gray check/labels, gold text
+       for checked labels. -->
+  <Color x:Key="VguiColorCheckBorder">#70685F</Color>
+  <Color x:Key="VguiColorTextSoft">#D8DED3</Color>
+  <Color x:Key="VguiColorTextChecked">#C4B550</Color>
+
+  <SolidColorBrush x:Key="VguiBrushBg" Color="{StaticResource VguiColorBg}" />
+  <SolidColorBrush x:Key="VguiBrushBgLight" Color="{StaticResource VguiColorBgLight}" />
+  <SolidColorBrush x:Key="VguiBrushBgDark" Color="{StaticResource VguiColorBgDark}" />
+  <SolidColorBrush x:Key="VguiBrushBorderLight" Color="{StaticResource VguiColorBorderLight}" />
+  <SolidColorBrush x:Key="VguiBrushBorderDark" Color="{StaticResource VguiColorBorderDark}" />
+  <SolidColorBrush x:Key="VguiBrushAccent" Color="{StaticResource VguiColorAccent}" />
+  <SolidColorBrush x:Key="VguiBrushText" Color="{StaticResource VguiColorText}" />
+  <SolidColorBrush x:Key="VguiBrushTextDim" Color="{StaticResource VguiColorTextDim}" />
+  <SolidColorBrush x:Key="VguiBrushClose" Color="{StaticResource VguiColorClose}" />
+  <SolidColorBrush x:Key="VguiBrushCheckBorder" Color="{StaticResource VguiColorCheckBorder}" />
+  <SolidColorBrush x:Key="VguiBrushTextSoft" Color="{StaticResource VguiColorTextSoft}" />
+  <SolidColorBrush x:Key="VguiBrushTextChecked" Color="{StaticResource VguiColorTextChecked}" />
+
+  <!-- VGUI2.css: .vgui-slider-scale — vertical ticks every 13px -->
+  <DrawingBrush x:Key="VguiTickBrush" TileMode="Tile" DestinationRect="0,0,13,5" Stretch="None">
+    <DrawingBrush.Drawing>
+      <GeometryDrawing Geometry="M12.5,0 L12.5,5">
+        <GeometryDrawing.Pen>
+          <Pen Brush="{StaticResource VguiBrushTextDim}" Thickness="1" />
+        </GeometryDrawing.Pen>
+      </GeometryDrawing>
+    </DrawingBrush.Drawing>
+  </DrawingBrush>
+
+  <!-- VGUI2.css: font-family: 'Verdana', '宋体'; font-size: 14px
+       NOTE: Avalonia ignores comma-list families beyond the primary one for
+       per-glyph fallback (CJK lands on the OS default, YaHei UI, instead of
+       宋体). Host apps should register FontManagerOptions.FontFallbacks
+       routing the CJK ranges (U+3000-303F, U+4E00-9FFF, U+F900-FAFF,
+       U+FF00-FFEF) to SimSun — see Demo/Program.cs. -->
+  <FontFamily x:Key="VguiFontFamily">Verdana, SimSun, Microsoft YaHei</FontFamily>
+  <x:Double x:Key="VguiFontSize">14</x:Double>
+  <x:Double x:Key="VguiFontSizeSmall">12</x:Double>
+
+  <!-- VGUI2.css structural metrics -->
+  <x:Double x:Key="VguiTitleHeight">30</x:Double>
+  <x:Double x:Key="VguiBottomHeight">30</x:Double>
+  <x:Double x:Key="VguiTabHeight">26</x:Double>
+  <x:Double x:Key="VguiTabButtonHeight">22</x:Double>
+  <x:Double x:Key="VguiListItemHeight">24</x:Double>
+  <x:Double x:Key="VguiRowHeight">18</x:Double>
+  <x:Double x:Key="VguiResizerThickness">5</x:Double>
+  <x:Double x:Key="VguiSliderHeight">40</x:Double>
+  <x:Double x:Key="VguiDialogMinWidth">250</x:Double>
+  <x:Double x:Key="VguiDialogMinHeight">114</x:Double>
+
+</ResourceDictionary>

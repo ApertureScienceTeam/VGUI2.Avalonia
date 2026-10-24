@@ -1,0 +1,9 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VGUI2.Avalonia.Demo.App"
+             RequestedThemeVariant="Default">
+    <!-- The VGUI2 theme is fully self-contained; no other theme is required. -->
+    <Application.Styles>
+        <StyleInclude Source="avares://VGUI2.Avalonia/Themes/VGUI2Theme.axaml" />
+    </Application.Styles>
+</Application>

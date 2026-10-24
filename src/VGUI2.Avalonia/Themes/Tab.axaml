@@ -1,0 +1,96 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-tab / .vgui-tab-button / .vgui-tab-content
+    (classes VguiTabControl + VguiTabItem)
+    Content-box model from the reference: an inactive tab is 22px of content
+    + 1px top bevel; its bottom edge is suppressed and the frame's hidden
+    1px bottom inset doubles as the gap above the content pane's top edge.
+    The selected one grows to 26px of content (28px control, 1px margin
+    overlap) and covers the pane's top edge, so there is no divider line
+    under it. Header text: top-left aligned, text-indent 4px like the
+    reference (.vgui-tab-button text-indent), +1px top air; long labels
+    ellipsize (.vgui-text-ellipsis).
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiTabControl}" TargetType="vgui2:VguiTabControl">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="ItemsPanel">
+      <ItemsPanelTemplate>
+        <StackPanel Orientation="Horizontal" />
+      </ItemsPanelTemplate>
+    </Setter>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid RowDefinitions="Auto,*">
+          <ItemsPresenter x:Name="PART_ItemsPresenter"
+                          ItemsPanel="{TemplateBinding ItemsPanel}"
+                          VerticalAlignment="Bottom"
+                          ZIndex="2" />
+          <vgui2:VguiFrame Grid.Row="1"
+                              FrameStyle="Raised"
+                              Background="{DynamicResource VguiBrushBg}"
+                              EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                              EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+            <ContentPresenter x:Name="PART_SelectedContentHost"
+                              Padding="{TemplateBinding Padding}" />
+          </vgui2:VguiFrame>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <ControlTheme x:Key="{x:Type vgui2:VguiTabItem}" TargetType="vgui2:VguiTabItem">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBg}" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="VerticalAlignment" Value="Bottom" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame x:Name="PART_Frame"
+                            FrameStyle="Raised"
+                            ShowBottomEdge="False"
+                            Background="{TemplateBinding Background}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <ContentPresenter Content="{TemplateBinding Header}"
+                            ContentTemplate="{TemplateBinding HeaderTemplate}"
+                            Margin="4,1,4,0"
+                            VerticalAlignment="Top">
+            <ContentPresenter.DataTemplates>
+              <!-- string headers ellipsize like the reference .vgui-text-ellipsis -->
+              <DataTemplate DataType="x:String">
+                <TextBlock Text="{Binding}"
+                           TextTrimming="CharacterEllipsis"
+                           TextWrapping="NoWrap" />
+              </DataTemplate>
+            </ContentPresenter.DataTemplates>
+          </ContentPresenter>
+        </vgui2:VguiFrame>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:selected">
+      <!-- 29 = 27 strip rows + 2px rounding slack: the extra dip absorbs
+           fractional-DPI layout rounding (at 1.5x the tabs' and pane's rects
+           round independently and a 1px overlap lets the pane's light top
+           edge peek out as a hairline). Margin -2 keeps the desired
+           contribution at 27 so the strip keeps its 1x geometry. -->
+      <Setter Property="Height" Value="29" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="Margin" Value="0,0,0,-2" />
+      <Setter Property="Foreground" Value="{DynamicResource VguiBrushAccent}" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

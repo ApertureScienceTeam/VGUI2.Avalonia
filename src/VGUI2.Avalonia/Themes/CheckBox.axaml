@@ -1,0 +1,110 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    Game-render checkbox (image ref): a 14px square with a uniform 1px
+    gray-olive border over the window background, a thick light-gray check
+    when checked, and a label that turns gold while checked. A focused
+    checkbox gets the black dotted frame like the game's focus indicator.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiCheckBox}" TargetType="vgui2:VguiCheckBox">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushTextSoft}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <Rectangle x:Name="PART_FocusGlyph"
+                     Margin="-3"
+                     Stroke="#000000"
+                     StrokeThickness="1"
+                     StrokeDashArray="1,1"
+                     IsVisible="False" />
+          <Grid ColumnDefinitions="Auto,*">
+            <Panel Width="14" Height="14" VerticalAlignment="Center">
+              <Border BorderBrush="{DynamicResource VguiBrushCheckBorder}"
+                      BorderThickness="1"
+                      Background="{DynamicResource VguiBrushBg}" />
+              <Path x:Name="PART_CheckGlyph"
+                    Data="M1,4.5 L6,10 L11.5,1"
+                    Stroke="{DynamicResource VguiBrushTextSoft}"
+                    StrokeThickness="2"
+                    Stretch="None"
+                    IsVisible="False" />
+            </Panel>
+            <ContentPresenter Grid.Column="1"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Margin="5,0,0,0"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+          </Grid>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:checked /template/ Path#PART_CheckGlyph">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+    <Style Selector="^:checked /template/ ContentPresenter">
+      <Setter Property="Foreground" Value="{DynamicResource VguiBrushTextChecked}" />
+    </Style>
+    <Style Selector="^:focus /template/ Rectangle#PART_FocusGlyph">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+  </ControlTheme>
+
+  <!--
+    VGUI2.css: input[type="radio"] (class VguiRadioButton) — a round inset
+    well showing a gold bullet (•) when checked.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiRadioButton}" TargetType="vgui2:VguiRadioButton">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushAccent}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="Auto,*">
+          <Panel Width="14" Height="14" VerticalAlignment="Center">
+            <Border CornerRadius="7"
+                    Background="{DynamicResource VguiBrushBgDark}"
+                    BorderBrush="{DynamicResource VguiBrushBorderDark}"
+                    BorderThickness="1">
+              <TextBlock x:Name="PART_DotGlyph"
+                         Text="•"
+                         FontSize="14"
+                         FontWeight="Bold"
+                         Foreground="{DynamicResource VguiBrushAccent}"
+                         TextAlignment="Center"
+                         VerticalAlignment="Center"
+                         Margin="0,-3,0,0"
+                         IsVisible="False" />
+            </Border>
+          </Panel>
+          <ContentPresenter Grid.Column="1"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            Margin="6,0,0,0"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:checked /template/ TextBlock#PART_DotGlyph">
+      <Setter Property="IsVisible" Value="True" />
+    </Style>
+  </ControlTheme>
+
+</ResourceDictionary>

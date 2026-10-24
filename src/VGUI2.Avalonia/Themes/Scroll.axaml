@@ -1,0 +1,163 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: ::-webkit-scrollbar — an 18px olive scrollbar with arrow
+    buttons at both ends and a raised thumb on a light track.
+  -->
+  <ControlTheme x:Key="{x:Type ScrollBar}" TargetType="ScrollBar">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <!-- VGUI2.css ::-webkit-scrollbar-track: light olive track; the
+             collapsed rows/columns keep the arrow buttons on olive. -->
+        <Grid x:Name="PART_Root"
+              RowDefinitions="18,*,18"
+              ColumnDefinitions="18,*,18"
+              Background="{DynamicResource VguiBrushBgLight}">
+          <Track x:Name="PART_Track"
+                 Grid.Row="1"
+                 Minimum="{TemplateBinding Minimum}"
+                 Maximum="{TemplateBinding Maximum}"
+                 Value="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                 ViewportSize="{TemplateBinding ViewportSize}"
+                 Orientation="{TemplateBinding Orientation}">
+            <Track.DecreaseButton>
+              <RepeatButton Focusable="False">
+                <RepeatButton.Template>
+                  <ControlTemplate>
+                    <Border Background="Transparent" />
+                  </ControlTemplate>
+                </RepeatButton.Template>
+              </RepeatButton>
+            </Track.DecreaseButton>
+            <Track.IncreaseButton>
+              <RepeatButton Focusable="False">
+                <RepeatButton.Template>
+                  <ControlTemplate>
+                    <Border Background="Transparent" />
+                  </ControlTemplate>
+                </RepeatButton.Template>
+              </RepeatButton>
+            </Track.IncreaseButton>
+            <Track.Thumb>
+              <Thumb Focusable="False" Margin="0" />
+            </Track.Thumb>
+          </Track>
+
+          <RepeatButton x:Name="PART_LineUpButton"
+                        Grid.Row="0" Grid.Column="0"
+                        Width="18" Height="18"
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+            <LayoutTransformControl x:Name="StartGlyphRotate">
+              <Path Data="M 0 5 L 5 0 L 10 5 Z"
+                    Fill="{StaticResource VguiBrushText}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            </LayoutTransformControl>
+          </RepeatButton>
+          <RepeatButton x:Name="PART_LineDownButton"
+                        Grid.Row="2" Grid.Column="0"
+                        Width="18" Height="18"
+                        VerticalAlignment="Bottom" HorizontalAlignment="Left">
+            <LayoutTransformControl x:Name="EndGlyphRotate">
+              <Path Data="M 0 0 L 5 5 L 10 0 Z"
+                    Fill="{StaticResource VguiBrushText}"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" />
+            </LayoutTransformControl>
+          </RepeatButton>
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+
+    <Style Selector="^:vertical">
+      <Setter Property="Width" Value="18" />
+    </Style>
+    <!-- Vertical tracks count downward: min at top, max at bottom -->
+    <Style Selector="^:vertical /template/ Track#PART_Track">
+      <Setter Property="IsDirectionReversed" Value="True" />
+    </Style>
+    <Style Selector="^:vertical /template/ RepeatButton#PART_LineUpButton">
+      <Setter Property="Width" Value="18" />
+    </Style>
+    <Style Selector="^:vertical /template/ RepeatButton#PART_LineDownButton">
+      <Setter Property="Width" Value="18" />
+    </Style>
+
+    <!-- Horizontal: same parts re-arranged via attached property setters -->
+    <Style Selector="^:horizontal">
+      <Setter Property="Height" Value="18" />
+    </Style>
+    <Style Selector="^:horizontal /template/ Track#PART_Track">
+      <Setter Property="Grid.Row" Value="0" />
+      <Setter Property="Grid.Column" Value="1" />
+    </Style>
+    <Style Selector="^:horizontal /template/ RepeatButton#PART_LineUpButton">
+      <Setter Property="Grid.Row" Value="0" />
+      <Setter Property="Grid.Column" Value="0" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+    <Style Selector="^:horizontal /template/ RepeatButton#PART_LineDownButton">
+      <Setter Property="Grid.Row" Value="0" />
+      <Setter Property="Grid.Column" Value="2" />
+      <Setter Property="VerticalAlignment" Value="Top" />
+      <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style Selector="^:horizontal /template/ LayoutTransformControl#StartGlyphRotate">
+      <Setter Property="LayoutTransform">
+        <RotateTransform Angle="-90" />
+      </Setter>
+    </Style>
+    <Style Selector="^:horizontal /template/ LayoutTransformControl#EndGlyphRotate">
+      <Setter Property="LayoutTransform">
+        <RotateTransform Angle="90" />
+      </Setter>
+    </Style>
+  </ControlTheme>
+
+  <!-- Raised thumb block used by the scrollbar and the slider -->
+  <ControlTheme x:Key="{x:Type Thumb}" TargetType="Thumb">
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBg}" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <vgui2:VguiFrame FrameStyle="Raised"
+                            Background="{TemplateBinding Background}"
+                            EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                            EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}" />
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+  <!--
+    Minimal self-contained ScrollViewer: ScrollContentPresenter and ScrollBar
+    wire themselves to their templated parent in Avalonia 12.
+  -->
+  <ControlTheme x:Key="{x:Type ScrollViewer}" TargetType="ScrollViewer">
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Grid ColumnDefinitions="*,Auto" RowDefinitions="*,Auto">
+          <ScrollContentPresenter x:Name="PART_ContentPresenter"
+                                  Grid.RowSpan="2"
+                                  Grid.ColumnSpan="2"
+                                  Margin="{TemplateBinding Padding}" />
+          <ScrollBar x:Name="PART_VerticalScrollBar"
+                     Grid.Column="1"
+                     Orientation="Vertical" />
+          <ScrollBar x:Name="PART_HorizontalScrollBar"
+                     Grid.Row="1"
+                     Orientation="Horizontal" />
+          <Rectangle Grid.Row="1"
+                     Grid.Column="1"
+                     Fill="{DynamicResource VguiBrushBgLight}" />
+        </Grid>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

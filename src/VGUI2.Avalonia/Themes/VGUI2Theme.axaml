@@ -1,0 +1,32 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    VGUI2 theme for Avalonia 12 — a faithful port of the reference
+    vgui2/src/VGUI2.css + VGUI2.js control set. Include it after (or instead
+    of) any other theme; it is fully self-contained.
+
+      <Application.Styles>
+        <StyleInclude Source="avares://VGUI2.Avalonia/Themes/VGUI2Theme.axaml" />
+      </Application.Styles>
+  -->
+  <Styles.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Panel.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Button.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/TextBox.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/CheckBox.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/ComboBox.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Slider.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/ProgressBar.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Tab.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Table.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Window.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Scroll.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Styles.Resources>
+
+</Styles>

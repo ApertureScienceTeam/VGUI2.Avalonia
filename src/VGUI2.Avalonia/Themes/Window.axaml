@@ -1,0 +1,125 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    VGUI2.css: .vgui-dialog — raised window chrome. Inside the 1px bevel
+    sits a 5px resize ring, then .vgui-dialog-inner: a 30px title bar
+    (18px icon zone / title / 22px close zone with a 20x20 button pinned
+    top-left of the zone), the body, a 5px gap and a 30px bottom strip
+    that is always reserved.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiWindow}" TargetType="vgui2:VguiWindow">
+    <Setter Property="Foreground" Value="{DynamicResource VguiBrushText}" />
+    <Setter Property="Background" Value="{DynamicResource VguiBrushBg}" />
+    <Setter Property="FontFamily" Value="{DynamicResource VguiFontFamily}" />
+    <Setter Property="FontSize" Value="{DynamicResource VguiFontSize}" />
+    <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+    <Setter Property="MinWidth" Value="{DynamicResource VguiDialogMinWidth}" />
+    <Setter Property="MinHeight" Value="{DynamicResource VguiDialogMinHeight}" />
+    <Setter Property="UseLayoutRounding" Value="True" />
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <vgui2:VguiFrame FrameStyle="Raised"
+                              Background="{DynamicResource VguiBrushBg}"
+                              EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                              EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+            <Grid Margin="5" RowDefinitions="30,*,5,30">
+              <!-- title bar -->
+              <Grid ColumnDefinitions="18,*,22">
+                <Panel VerticalAlignment="Stretch">
+                  <Image Source="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static vgui2:VguiConverters.WindowIconToBitmap}}"
+                         Width="16"
+                         Height="16"
+                         VerticalAlignment="Top"
+                         HorizontalAlignment="Left" />
+                </Panel>
+                <Border x:Name="PART_TitleBar"
+                        Grid.Column="1"
+                        Background="Transparent"
+                        Cursor="Arrow">
+                  <TextBlock Text="{TemplateBinding Title}"
+                             Margin="0,1,0,0"
+                             VerticalAlignment="Top"
+                             TextTrimming="CharacterEllipsis"
+                             Foreground="{DynamicResource VguiBrushText}" />
+                </Border>
+                <vgui2:VguiButton x:Name="PART_CloseButton"
+                        Grid.Column="2"
+                        Width="20"
+                        Height="20"
+                        Padding="0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left"
+                        IsVisible="{TemplateBinding ShowCloseButton}"
+                        Focusable="False">
+                  <Image Source="{x:Static vgui2:VguiImages.CloseButton}"
+                         Width="20"
+                         Height="20"
+                         Stretch="None" />
+                </vgui2:VguiButton>
+              </Grid>
+
+              <!-- body — CSS .vgui-dialog-body { overflow: auto }: fixed-size
+                   content scrolls inside the body when the window shrinks -->
+              <ScrollViewer Grid.Row="1"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                <ContentPresenter x:Name="PART_ContentPresenter"
+                                  Content="{TemplateBinding Content}"
+                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                  Padding="{TemplateBinding Padding}"
+                                  HorizontalContentAlignment="Stretch"
+                                  VerticalContentAlignment="Stretch" />
+              </ScrollViewer>
+
+              <!-- row 2 is the 5px gap between body and bottom strip -->
+
+              <!-- bottom strip (zone always reserved, .vgui-dialog-bottom) -->
+              <ContentPresenter x:Name="PART_BottomPresenter"
+                                Grid.Row="3"
+                                Content="{TemplateBinding BottomContent}"
+                                IsVisible="{TemplateBinding BottomContent, Converter={x:Static ObjectConverters.IsNotNull}}" />
+            </Grid>
+          </vgui2:VguiFrame>
+
+          <!-- resize grips (VGUI2.css: .vgui-resizer-*) -->
+          <Panel>
+            <Border x:Name="PART_ResizeLt" Width="5" Height="5"
+                    HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Background="Transparent" Cursor="TopLeftCorner" />
+            <Border x:Name="PART_ResizeT" Height="5"
+                    Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                    Background="Transparent" Cursor="TopSide" />
+            <Border x:Name="PART_ResizeRt" Width="5" Height="5"
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Background="Transparent" Cursor="TopRightCorner" />
+            <Border x:Name="PART_ResizeL" Width="5"
+                    Margin="0,5,0,5" HorizontalAlignment="Left" VerticalAlignment="Stretch"
+                    Background="Transparent" Cursor="LeftSide" />
+            <Border x:Name="PART_ResizeR" Width="5"
+                    Margin="0,5,0,5" HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                    Background="Transparent" Cursor="RightSide" />
+            <Border x:Name="PART_ResizeLb" Width="5" Height="5"
+                    HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                    Background="Transparent" Cursor="BottomLeftCorner" />
+            <Border x:Name="PART_ResizeB" Height="5"
+                    Margin="5,0,5,0" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"
+                    Background="Transparent" Cursor="BottomSide" />
+            <Border x:Name="PART_ResizeRb" Width="5" Height="5"
+                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                    Background="Transparent" Cursor="BottomRightCorner" />
+          </Panel>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </ControlTheme>
+
+</ResourceDictionary>

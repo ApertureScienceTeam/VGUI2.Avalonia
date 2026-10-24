@@ -1,0 +1,102 @@
+<vgui2:VguiWindow xmlns="https://github.com/avaloniaui"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:vgui2="using:VGUI2.Avalonia.Controls"
+                     xmlns:local="using:VGUI2.Avalonia.Demo"
+                     x:Class="VGUI2.Avalonia.Demo.MainWindow"
+                     Title="测试窗口"
+                     Width="515" Height="415">
+
+  <vgui2:VguiTabControl x:Name="Tabs" Width="500" Height="330"
+                        HorizontalAlignment="Left" VerticalAlignment="Top">
+
+    <vgui2:VguiTabItem Header="多人游戏" Width="67">
+      <Canvas Width="496" Height="300">
+
+        <!-- 文本框 -->
+        <vgui2:VguiPanel Content="文本框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="10" Canvas.Left="10" />
+        <vgui2:VguiTextBox Width="400" Height="20" Canvas.Top="10" Canvas.Left="80" />
+
+        <!-- 密码框 -->
+        <vgui2:VguiPanel Content="密码框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="40" Canvas.Left="10" />
+        <vgui2:VguiTextBox Width="120" Height="20" PasswordChar="●" Canvas.Top="40" Canvas.Left="80" />
+
+        <!-- 数字框 -->
+        <vgui2:VguiPanel Content="数字框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="70" Canvas.Left="10" />
+        <vgui2:VguiTextBox Width="120" Height="20" Canvas.Top="70" Canvas.Left="80" />
+
+        <!-- 单选框 -->
+        <vgui2:VguiPanel Content="单选框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="100" Canvas.Left="10" />
+        <vgui2:VguiRadioButton GroupName="test1" IsChecked="True" Canvas.Top="100" Canvas.Left="80" />
+        <vgui2:VguiRadioButton GroupName="test1" Canvas.Top="100" Canvas.Left="100" />
+
+        <!-- 多选框 -->
+        <vgui2:VguiPanel Content="多选框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="130" Canvas.Left="10" />
+        <vgui2:VguiCheckBox IsChecked="True" Canvas.Top="130" Canvas.Left="80" />
+        <vgui2:VguiCheckBox Canvas.Top="130" Canvas.Left="100" />
+
+        <!-- 下拉框 -->
+        <vgui2:VguiPanel Content="下拉框" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="160" Canvas.Left="10" />
+        <vgui2:VguiComboBox x:Name="PlayerSelect" Width="120" Height="20"
+                               MaxDropDownHeight="200"
+                               DisplayMemberBinding="{Binding Label, x:DataType=local:PlayerItem}"
+                               Canvas.Top="160" Canvas.Left="80" />
+
+        <!-- 滑块 -->
+        <vgui2:VguiPanel Content="滑块" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="190" Canvas.Left="10" />
+        <vgui2:VguiSlider x:Name="Slider1" Width="150" Minimum="1" Maximum="10"
+                             Canvas.Top="190" Canvas.Left="80" />
+        <vgui2:VguiTextBox Width="50" Height="20" IsReadOnly="True"
+                              Text="{Binding #Slider1.Value, Mode=OneWay, StringFormat={}{0:0.00}}"
+                              Canvas.Top="190" Canvas.Left="240" />
+
+        <!-- 进度条 -->
+        <vgui2:VguiPanel Content="进度条" Width="60" Height="20"
+                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
+                            Canvas.Top="230" Canvas.Left="10" />
+        <vgui2:VguiProgressBar x:Name="Progress1" Width="128" Height="24"
+                                  Canvas.Top="230" Canvas.Left="80" />
+        <vgui2:VguiButton Width="24" Height="24" Content="-" Padding="0"
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             Click="OnProgressMinus" Canvas.Top="230" Canvas.Left="240" />
+        <vgui2:VguiButton Width="24" Height="24" Content="+" Padding="0"
+                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                             Click="OnProgressPlus" Canvas.Top="230" Canvas.Left="270" />
+
+      </Canvas>
+    </vgui2:VguiTabItem>
+
+    <vgui2:VguiTabItem Header="键盘" Width="67">
+      <vgui2:VguiPanel Content="222222222222" Margin="10" />
+    </vgui2:VguiTabItem>
+    <vgui2:VguiTabItem Header="鼠标" Width="67">
+      <vgui2:VguiPanel Content="333333333333" Margin="10" />
+    </vgui2:VguiTabItem>
+    <vgui2:VguiTabItem Header="音频" Width="67">
+      <vgui2:VguiPanel Content="444444444444" Margin="10" />
+    </vgui2:VguiTabItem>
+    <vgui2:VguiTabItem Header="视频" Width="67">
+      <vgui2:VguiPanel Content="555555555555" Margin="10" />
+    </vgui2:VguiTabItem>
+    <vgui2:VguiTabItem Header="声音" Width="67">
+      <vgui2:VguiPanel Content="666666666666" Margin="10" />
+    </vgui2:VguiTabItem>
+    <vgui2:VguiTabItem Header="锁定" Width="67">
+      <vgui2:VguiPanel Content="777777777777" Margin="10" />
+    </vgui2:VguiTabItem>
+
+  </vgui2:VguiTabControl>
+</vgui2:VguiWindow>
