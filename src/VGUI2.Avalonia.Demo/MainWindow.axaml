@@ -1,102 +1,283 @@
 <vgui2:VguiWindow xmlns="https://github.com/avaloniaui"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:vgui2="using:VGUI2.Avalonia.Controls"
-                     xmlns:local="using:VGUI2.Avalonia.Demo"
                      x:Class="VGUI2.Avalonia.Demo.MainWindow"
-                     Title="测试窗口"
-                     Width="515" Height="415">
+                     Title="Options"
+                     Width="550" Height="492">
 
-  <vgui2:VguiTabControl x:Name="Tabs" Width="500" Height="330"
-                        HorizontalAlignment="Left" VerticalAlignment="Top">
+  <!--
+    Replica of the classic Half-Life "Options" dialog, one tab per page:
+    Multiplayer / Audio / Video / Aim / Keyboard / Voice / Content.
+  -->
 
-    <vgui2:VguiTabItem Header="多人游戏" Width="67">
-      <Canvas Width="496" Height="300">
+  <vgui2:VguiWindow.Resources>
+    <!-- Voice tab: the mic level meter — a green→red gradient sliced into
+         segments by a tiled brush of background-coloured gaps. -->
+    <LinearGradientBrush x:Key="MicMeterGradient" StartPoint="0%,50%" EndPoint="100%,50%">
+      <GradientStop Color="#3D8B3D" Offset="0" />
+      <GradientStop Color="#8FA82E" Offset="0.5" />
+      <GradientStop Color="#C2A02C" Offset="0.75" />
+      <GradientStop Color="#B03028" Offset="1" />
+    </LinearGradientBrush>
+    <DrawingBrush x:Key="MicMeterGaps" TileMode="Tile" DestinationRect="0,0,7,12" Stretch="None">
+      <DrawingBrush.Drawing>
+        <GeometryDrawing Brush="{DynamicResource VguiBrushBg}">
+          <GeometryDrawing.Geometry>
+            <RectangleGeometry Rect="5,0,2,12" />
+          </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+      </DrawingBrush.Drawing>
+    </DrawingBrush>
+  </vgui2:VguiWindow.Resources>
 
-        <!-- 文本框 -->
-        <vgui2:VguiPanel Content="文本框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="10" Canvas.Left="10" />
-        <vgui2:VguiTextBox Width="400" Height="20" Canvas.Top="10" Canvas.Left="80" />
+  <vgui2:VguiTabControl Width="522" Height="414"
+                        HorizontalAlignment="Left" VerticalAlignment="Top" Margin="8,0,0,0">
 
-        <!-- 密码框 -->
-        <vgui2:VguiPanel Content="密码框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="40" Canvas.Left="10" />
-        <vgui2:VguiTextBox Width="120" Height="20" PasswordChar="●" Canvas.Top="40" Canvas.Left="80" />
+    <!-- ================================================== Multiplayer -->
+    <vgui2:VguiTabItem Header="Multiplayer" Width="84">
+      <Canvas Width="520" Height="384">
 
-        <!-- 数字框 -->
-        <vgui2:VguiPanel Content="数字框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="70" Canvas.Left="10" />
-        <vgui2:VguiTextBox Width="120" Height="20" Canvas.Top="70" Canvas.Left="80" />
+        <vgui2:VguiPanel Content="Player name" Height="20" Canvas.Left="52" Canvas.Top="38"
+                         Foreground="{DynamicResource VguiBrushTextChecked}" />
+        <vgui2:VguiTextBox Width="200" Height="20" Canvas.Left="52" Canvas.Top="60" Text="bubu" />
 
-        <!-- 单选框 -->
-        <vgui2:VguiPanel Content="单选框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="100" Canvas.Left="10" />
-        <vgui2:VguiRadioButton GroupName="test1" IsChecked="True" Canvas.Top="100" Canvas.Left="80" />
-        <vgui2:VguiRadioButton GroupName="test1" Canvas.Top="100" Canvas.Left="100" />
+        <vgui2:VguiPanel Content="Spraypaint image" Height="20" Canvas.Left="52" Canvas.Top="100" />
+        <vgui2:VguiFrame FrameStyle="Inset" Width="58" Height="58" Canvas.Left="52" Canvas.Top="124"
+                         Background="#1A1A1A"
+                         EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                         EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <TextBlock Text="λ" FontSize="38" FontWeight="Bold" Foreground="#D2691E"
+                     HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </vgui2:VguiFrame>
+        <vgui2:VguiComboBox Width="132" Height="20" Canvas.Left="122" Canvas.Top="128" SelectedIndex="0">
+          <x:String>lambda</x:String>
+        </vgui2:VguiComboBox>
+        <vgui2:VguiComboBox Width="132" Height="20" Canvas.Left="122" Canvas.Top="158" SelectedIndex="0">
+          <x:String>橙色</x:String>
+        </vgui2:VguiComboBox>
+        <TextBlock Canvas.Left="52" Canvas.Top="194" Width="230" TextWrapping="Wrap"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="Changes to your spraypaint image take effect when you join a server." />
 
-        <!-- 多选框 -->
-        <vgui2:VguiPanel Content="多选框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="130" Canvas.Left="10" />
-        <vgui2:VguiCheckBox IsChecked="True" Canvas.Top="130" Canvas.Left="80" />
-        <vgui2:VguiCheckBox Canvas.Top="130" Canvas.Left="100" />
+        <vgui2:VguiPanel Content="Crosshair appearance" Height="20" Canvas.Left="300" Canvas.Top="100" />
+        <vgui2:VguiFrame FrameStyle="Inset" Width="58" Height="58" Canvas.Left="300" Canvas.Top="124"
+                         Background="#4A4438"
+                         EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                         EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <Panel>
+            <Rectangle Height="1" Fill="#8FD08F" VerticalAlignment="Center" />
+            <Rectangle Width="1" Fill="#8FD08F" HorizontalAlignment="Center" />
+          </Panel>
+        </vgui2:VguiFrame>
+        <vgui2:VguiComboBox Width="132" Height="20" Canvas.Left="370" Canvas.Top="128" SelectedIndex="0">
+          <x:String>Auto-size</x:String>
+        </vgui2:VguiComboBox>
+        <vgui2:VguiComboBox Width="132" Height="20" Canvas.Left="370" Canvas.Top="158" SelectedIndex="0">
+          <x:String>绿色</x:String>
+        </vgui2:VguiComboBox>
+        <vgui2:VguiCheckBox Content="Translucent" IsChecked="True" Canvas.Left="302" Canvas.Top="194" />
 
-        <!-- 下拉框 -->
-        <vgui2:VguiPanel Content="下拉框" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="160" Canvas.Left="10" />
-        <vgui2:VguiComboBox x:Name="PlayerSelect" Width="120" Height="20"
-                               MaxDropDownHeight="200"
-                               DisplayMemberBinding="{Binding Label, x:DataType=local:PlayerItem}"
-                               Canvas.Top="160" Canvas.Left="80" />
-
-        <!-- 滑块 -->
-        <vgui2:VguiPanel Content="滑块" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="190" Canvas.Left="10" />
-        <vgui2:VguiSlider x:Name="Slider1" Width="150" Minimum="1" Maximum="10"
-                             Canvas.Top="190" Canvas.Left="80" />
-        <vgui2:VguiTextBox Width="50" Height="20" IsReadOnly="True"
-                              Text="{Binding #Slider1.Value, Mode=OneWay, StringFormat={}{0:0.00}}"
-                              Canvas.Top="190" Canvas.Left="240" />
-
-        <!-- 进度条 -->
-        <vgui2:VguiPanel Content="进度条" Width="60" Height="20"
-                            HorizontalContentAlignment="Right" VerticalContentAlignment="Center"
-                            Canvas.Top="230" Canvas.Left="10" />
-        <vgui2:VguiProgressBar x:Name="Progress1" Width="128" Height="24"
-                                  Canvas.Top="230" Canvas.Left="80" />
-        <vgui2:VguiButton Width="24" Height="24" Content="-" Padding="0"
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                             Click="OnProgressMinus" Canvas.Top="230" Canvas.Left="240" />
-        <vgui2:VguiButton Width="24" Height="24" Content="+" Padding="0"
-                             HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                             Click="OnProgressPlus" Canvas.Top="230" Canvas.Left="270" />
+        <vgui2:VguiButton Content="Advanced..." Width="124" Height="24" Canvas.Left="52" Canvas.Top="270" />
 
       </Canvas>
     </vgui2:VguiTabItem>
 
-    <vgui2:VguiTabItem Header="键盘" Width="67">
-      <vgui2:VguiPanel Content="222222222222" Margin="10" />
+    <!-- ================================================== Audio -->
+    <vgui2:VguiTabItem Header="Audio" Width="62">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiPanel Content="Sound effects volume" Height="20" Canvas.Left="58" Canvas.Top="10"
+                         Foreground="{DynamicResource VguiBrushTextChecked}" />
+        <vgui2:VguiSlider Canvas.Left="50" Canvas.Top="32" Width="420"
+                          Minimum="0" Maximum="1" Value="0.4" ShowCaptions="False" />
+
+        <vgui2:VguiPanel Content="MP3 volume *" Height="20" Canvas.Left="58" Canvas.Top="92" />
+        <vgui2:VguiSlider Canvas.Left="50" Canvas.Top="114" Width="420"
+                          Minimum="0" Maximum="1" Value="0.75" ShowCaptions="False" />
+
+        <vgui2:VguiPanel Content="Sound quality" Height="20" Canvas.Left="58" Canvas.Top="196" />
+        <vgui2:VguiComboBox Width="186" Height="20" Canvas.Left="50" Canvas.Top="218" SelectedIndex="1">
+          <x:String>Low</x:String>
+          <x:String>High</x:String>
+        </vgui2:VguiComboBox>
+
+        <TextBlock Canvas.Left="58" Canvas.Top="268" Width="430" TextWrapping="Wrap"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="* MPEG Layer-3 playback supplied with the Miles Sound System from RAD Game Tools, Inc. MPEG Layer-3 audio compression technology licensed by Fraunhofer IIS and THOMSON multimedia." />
+
+      </Canvas>
     </vgui2:VguiTabItem>
-    <vgui2:VguiTabItem Header="鼠标" Width="67">
-      <vgui2:VguiPanel Content="333333333333" Margin="10" />
+
+    <!-- ================================================== Video -->
+    <vgui2:VguiTabItem Header="Video" Width="62">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiPanel Content="Renderer" Height="20" Canvas.Left="52" Canvas.Top="12"
+                         Foreground="{DynamicResource VguiBrushTextChecked}" />
+        <vgui2:VguiComboBox Width="186" Height="20" Canvas.Left="168" Canvas.Top="12" SelectedIndex="0">
+          <x:String>OpenGL</x:String>
+        </vgui2:VguiComboBox>
+
+        <vgui2:VguiPanel Content="Resolution" Height="20" Canvas.Left="52" Canvas.Top="42" />
+        <vgui2:VguiComboBox Width="186" Height="20" Canvas.Left="168" Canvas.Top="42" SelectedIndex="0">
+          <x:String>1280 x 720</x:String>
+        </vgui2:VguiComboBox>
+
+        <vgui2:VguiPanel Content="Display Mode" Height="20" Canvas.Left="52" Canvas.Top="72" />
+        <vgui2:VguiComboBox Width="186" Height="20" Canvas.Left="168" Canvas.Top="72" SelectedIndex="0">
+          <x:String>Widescreen</x:String>
+        </vgui2:VguiComboBox>
+
+        <vgui2:VguiCheckBox Content="Windowed mode" IsChecked="True" Canvas.Left="168" Canvas.Top="106" />
+        <vgui2:VguiCheckBox Content="Allow widescreen Field of View" IsChecked="True" Canvas.Left="168" Canvas.Top="134" />
+        <vgui2:VguiCheckBox Content="Wait for vertical sync" IsChecked="True" Canvas.Left="168" Canvas.Top="162" />
+        <vgui2:VguiCheckBox Content="Enable texture filtering" IsChecked="True" Canvas.Left="168" Canvas.Top="190" />
+        <vgui2:VguiCheckBox Content="Use shaders" IsChecked="True" Canvas.Left="168" Canvas.Top="218" />
+
+        <vgui2:VguiPanel Content="Brightness" Height="20" Canvas.Left="52" Canvas.Top="252" />
+        <vgui2:VguiSlider Canvas.Left="168" Canvas.Top="248" Width="290"
+                          Minimum="0" Maximum="1" Value="0.55"
+                          MinimumCaption="Dark" MaximumCaption="Light" />
+
+        <vgui2:VguiPanel Content="Gamma" Height="20" Canvas.Left="52" Canvas.Top="296" />
+        <vgui2:VguiSlider Canvas.Left="168" Canvas.Top="292" Width="290"
+                          Minimum="0" Maximum="1" Value="0.7"
+                          MinimumCaption="Low" MaximumCaption="High" />
+
+        <TextBlock Canvas.Left="52" Canvas.Top="350" Width="440" TextWrapping="Wrap"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="Note: changing some video options will cause the game to exit and restart." />
+
+      </Canvas>
     </vgui2:VguiTabItem>
-    <vgui2:VguiTabItem Header="音频" Width="67">
-      <vgui2:VguiPanel Content="444444444444" Margin="10" />
+
+    <!-- ================================================== Aim -->
+    <vgui2:VguiTabItem Header="Aim" Width="50">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiCheckBox Content="Invert mouse" Canvas.Left="75" Canvas.Top="15" />
+        <TextBlock Canvas.Left="245" Canvas.Top="17" Text="Reverse mouse up-down axis."
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}" />
+
+        <vgui2:VguiCheckBox Content="Mouse filter" Canvas.Left="75" Canvas.Top="39" />
+        <TextBlock Canvas.Left="245" Canvas.Top="41" Text="Smooth out mouse movement"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}" />
+
+        <vgui2:VguiCheckBox Content="Auto-Aim" IsChecked="True" Canvas.Left="75" Canvas.Top="63" />
+        <TextBlock Canvas.Left="245" Canvas.Top="65" Text="Aims at enemies automatically"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}" />
+
+        <vgui2:VguiCheckBox Content="Raw mouse input" Canvas.Left="75" Canvas.Top="87" />
+        <TextBlock Canvas.Left="245" Canvas.Top="89" Text="Directly access mouse data"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}" />
+
+        <vgui2:VguiCheckBox Content="Lower input latency" Canvas.Left="75" Canvas.Top="111" />
+        <TextBlock Canvas.Left="245" Canvas.Top="113" Text="Reduce time between input and display"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}" />
+
+        <vgui2:VguiPanel Content="Aim sensitivity" Height="20" Canvas.Left="75" Canvas.Top="184" />
+        <vgui2:VguiSlider Canvas.Left="67" Canvas.Top="206" Width="280"
+                          Minimum="0.2" Maximum="20" Value="3"
+                          MinimumCaption="0.20" MaximumCaption="20.00" />
+        <vgui2:VguiTextBox Width="64" Height="22" Canvas.Left="380" Canvas.Top="220" Text="3.0" />
+
+      </Canvas>
     </vgui2:VguiTabItem>
-    <vgui2:VguiTabItem Header="视频" Width="67">
-      <vgui2:VguiPanel Content="555555555555" Margin="10" />
+
+    <!-- ================================================== Keyboard -->
+    <vgui2:VguiTabItem Header="Keyboard" Width="80">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiTable x:Name="KeysTable" Canvas.Left="5" Canvas.Top="5" Width="510" Height="272">
+          <vgui2:VguiTable.Columns>
+            <vgui2:VguiTableColumn Key="Action" Header="动作" Width="230" />
+            <vgui2:VguiTableColumn Key="KeyButton" Header="KEY/BUTTON" Width="120" />
+            <vgui2:VguiTableColumn Key="Alternate" Header="ALTERNATE" Width="120" />
+          </vgui2:VguiTable.Columns>
+        </vgui2:VguiTable>
+
+        <vgui2:VguiButton Content="Use Defaults" Width="112" Height="24" Canvas.Left="5" Canvas.Top="286" />
+        <vgui2:VguiButton Content="Edit key" Width="100" Height="24" Canvas.Left="285" Canvas.Top="286" />
+        <vgui2:VguiButton Content="Clear Key" Width="100" Height="24" Canvas.Left="393" Canvas.Top="286" />
+
+      </Canvas>
     </vgui2:VguiTabItem>
-    <vgui2:VguiTabItem Header="声音" Width="67">
-      <vgui2:VguiPanel Content="666666666666" Margin="10" />
+
+    <!-- ================================================== Voice -->
+    <vgui2:VguiTabItem Header="Voice" Width="62">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiFrame FrameStyle="Inset" Width="300" Height="22" Canvas.Left="55" Canvas.Top="12"
+                         EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                         EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <vgui2:VguiCheckBox Content="Enable voice in this game" IsChecked="True" Margin="2,1,0,0" />
+        </vgui2:VguiFrame>
+        <vgui2:VguiCheckBox Content="Boost microphone gain" IsChecked="True" Canvas.Left="57" Canvas.Top="42" />
+
+        <vgui2:VguiPanel Content="Voice transmit volume *" Height="20" Canvas.Left="57" Canvas.Top="76" />
+        <vgui2:VguiSlider Canvas.Left="50" Canvas.Top="98" Width="430"
+                          Minimum="0" Maximum="1" Value="0.95" ShowCaptions="False" />
+
+        <vgui2:VguiPanel Content="Voice receive volume *" Height="20" Canvas.Left="57" Canvas.Top="142" />
+        <vgui2:VguiSlider Canvas.Left="50" Canvas.Top="164" Width="430"
+                          Minimum="0" Maximum="1" Value="0.6" ShowCaptions="False" />
+
+        <Rectangle Canvas.Left="57" Canvas.Top="212" Width="135" Height="12" Fill="{StaticResource MicMeterGradient}" />
+        <Rectangle Canvas.Left="57" Canvas.Top="212" Width="135" Height="12" Fill="{StaticResource MicMeterGaps}" />
+        <vgui2:VguiButton Content="Test Microphone" Width="135" Height="24" Canvas.Left="57" Canvas.Top="234" />
+
+        <TextBlock Canvas.Left="57" Canvas.Top="300"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="* Uses Miles Sound System.&#x0a;Copyright © 1991-2001 by RAD Game Tools, Inc." />
+
+      </Canvas>
     </vgui2:VguiTabItem>
-    <vgui2:VguiTabItem Header="锁定" Width="67">
-      <vgui2:VguiPanel Content="777777777777" Margin="10" />
+
+    <!-- ================================================== Content -->
+    <vgui2:VguiTabItem Header="Content" Width="72">
+      <Canvas Width="520" Height="384">
+
+        <vgui2:VguiFrame FrameStyle="Inset" Width="300" Height="22" Canvas.Left="75" Canvas.Top="12"
+                         EdgeLightBrush="{DynamicResource VguiBrushBorderLight}"
+                         EdgeDarkBrush="{DynamicResource VguiBrushBorderDark}">
+          <vgui2:VguiCheckBox Content="Enable original models" IsChecked="True" Margin="2,1,0,0" />
+        </vgui2:VguiFrame>
+        <vgui2:VguiCheckBox Content="Allow custom addon content" Canvas.Left="77" Canvas.Top="42" />
+
+        <vgui2:VguiCheckBox Content="Content lock" Canvas.Left="75" Canvas.Top="150" />
+        <TextBlock Canvas.Left="195" Canvas.Top="150" Width="290" TextWrapping="Wrap"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextSoft}"
+                   Text="Press this button and enter password to disable visuals inappropriate for younger players." />
+
+        <TextBlock Canvas.Left="75" Canvas.Top="345"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="Note: changing some content options will cause the game to exit and restart." />
+
+      </Canvas>
     </vgui2:VguiTabItem>
 
   </vgui2:VguiTabControl>
+
+  <!-- dialog buttons, bottom-right of the window strip -->
+  <vgui2:VguiWindow.BottomContent>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                Margin="0,0,8,0" Spacing="7">
+      <vgui2:VguiButton Content="确认" Width="68" Height="24" />
+      <vgui2:VguiButton Content="取消" Width="68" Height="24" />
+      <vgui2:VguiButton Content="提交" Width="68" Height="24" IsEnabled="False"
+                        Foreground="{DynamicResource VguiBrushTextDim}" />
+    </StackPanel>
+  </vgui2:VguiWindow.BottomContent>
+
 </vgui2:VguiWindow>

@@ -55,17 +55,17 @@
                   BorderBrush="{StaticResource VguiBrushTextDim}"
                   Background="{StaticResource VguiTickBrush}" />
 
-          <Grid Grid.Row="2">
-            <TextBlock HorizontalAlignment="Left"
+          <Grid Grid.Row="2" IsVisible="{TemplateBinding ShowCaptions}">
+            <TextBlock x:Name="PART_MinCaption"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Top"
                        FontSize="{DynamicResource VguiFontSizeSmall}"
-                       Foreground="{DynamicResource VguiBrushTextDim}"
-                       Text="{Binding Minimum, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}{0}}" />
-            <TextBlock HorizontalAlignment="Right"
+                       Foreground="{DynamicResource VguiBrushTextDim}" />
+            <TextBlock x:Name="PART_MaxCaption"
+                       HorizontalAlignment="Right"
                        VerticalAlignment="Top"
                        FontSize="{DynamicResource VguiFontSizeSmall}"
-                       Foreground="{DynamicResource VguiBrushTextDim}"
-                       Text="{Binding Maximum, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}{0}}" />
+                       Foreground="{DynamicResource VguiBrushTextDim}" />
           </Grid>
         </Grid>
       </ControlTemplate>

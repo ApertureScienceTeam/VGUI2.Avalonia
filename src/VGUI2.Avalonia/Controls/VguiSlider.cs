@@ -12,8 +12,19 @@ namespace VGUI2.Avalonia.Controls;
 /// </summary>
 public class VguiSlider : RangeBase
 {
+    public static readonly StyledProperty<bool> ShowCaptionsProperty =
+        AvaloniaProperty.Register<VguiSlider, bool>(nameof(ShowCaptions), true);
+
+    public static readonly StyledProperty<string?> MinimumCaptionProperty =
+        AvaloniaProperty.Register<VguiSlider, string?>(nameof(MinimumCaption));
+
+    public static readonly StyledProperty<string?> MaximumCaptionProperty =
+        AvaloniaProperty.Register<VguiSlider, string?>(nameof(MaximumCaption));
+
     private Thumb? _thumb;
     private Panel? _trackArea;
+    private TextBlock? _minCaption;
+    private TextBlock? _maxCaption;
 
     static VguiSlider()
     {
@@ -21,6 +32,27 @@ public class VguiSlider : RangeBase
         MaximumProperty.OverrideDefaultValue<VguiSlider>(10.0);
         AffectsArrange<VguiSlider>(MinimumProperty, MaximumProperty, ValueProperty);
         AffectsRender<VguiSlider>(ValueProperty);
+    }
+
+    /// <summary>Whether the min/max caption row under the tick scale is shown.</summary>
+    public bool ShowCaptions
+    {
+        get => GetValue(ShowCaptionsProperty);
+        set => SetValue(ShowCaptionsProperty, value);
+    }
+
+    /// <summary>Text for the left caption; falls back to <see cref="RangeBase.Minimum"/> when null.</summary>
+    public string? MinimumCaption
+    {
+        get => GetValue(MinimumCaptionProperty);
+        set => SetValue(MinimumCaptionProperty, value);
+    }
+
+    /// <summary>Text for the right caption; falls back to <see cref="RangeBase.Maximum"/> when null.</summary>
+    public string? MaximumCaption
+    {
+        get => GetValue(MaximumCaptionProperty);
+        set => SetValue(MaximumCaptionProperty, value);
     }
 
     /// <inheritdoc />
@@ -41,6 +73,8 @@ public class VguiSlider : RangeBase
 
         _thumb = e.NameScope.Find<Thumb>("PART_Thumb");
         _trackArea = e.NameScope.Find<Panel>("PART_TrackArea");
+        _minCaption = e.NameScope.Find<TextBlock>("PART_MinCaption");
+        _maxCaption = e.NameScope.Find<TextBlock>("PART_MaxCaption");
 
         if (_thumb is not null)
         {
@@ -54,6 +88,7 @@ public class VguiSlider : RangeBase
         }
 
         UpdateThumbPosition();
+        UpdateCaptions();
     }
 
     /// <inheritdoc />
@@ -66,6 +101,25 @@ public class VguiSlider : RangeBase
             change.Property == MaximumProperty)
         {
             UpdateThumbPosition();
+            UpdateCaptions();
+        }
+        else if (change.Property == MinimumCaptionProperty ||
+                 change.Property == MaximumCaptionProperty)
+        {
+            UpdateCaptions();
+        }
+    }
+
+    private void UpdateCaptions()
+    {
+        if (_minCaption is not null)
+        {
+            _minCaption.Text = MinimumCaption ?? Minimum.ToString();
+        }
+
+        if (_maxCaption is not null)
+        {
+            _maxCaption.Text = MaximumCaption ?? Maximum.ToString();
         }
     }
 

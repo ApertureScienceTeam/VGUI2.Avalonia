@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:vgui2="using:VGUI2.Avalonia.Controls">
+
+  <ResourceDictionary.MergedDictionaries>
+    <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Palette.axaml" />
+  </ResourceDictionary.MergedDictionaries>
+
+  <!--
+    The sunken separator line that divides groups in classic VGUI dialogs:
+    a 2px line, dark edge on top and light edge on the bottom (the inset
+    pairing). Stretches horizontally by default; set Orientation="Vertical"
+    plus a Height for a vertical groove.
+  -->
+  <ControlTheme x:Key="{x:Type vgui2:VguiDivider}" TargetType="vgui2:VguiDivider">
+    <Setter Property="Height" Value="2" />
+    <Setter Property="EdgeDarkBrush" Value="{DynamicResource VguiBrushBorderDark}" />
+    <Setter Property="EdgeLightBrush" Value="{DynamicResource VguiBrushBorderLight}" />
+  </ControlTheme>
+
+</ResourceDictionary>
