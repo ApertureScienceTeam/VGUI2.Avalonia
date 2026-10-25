@@ -29,6 +29,18 @@ jobs:
           -c Release -o publish
           -p:ContinuousIntegrationBuild=true
 
+      # 没有任何 v* tag 时 MinVer 会回退 0.0.0-alpha.*，直接拒绝发布
+      - name: Check version
+        run: |
+          f=$(ls publish/*.nupkg | head -n1)
+          v=$(basename "$f" .nupkg); v=${v#VGUI2.Avalonia.}
+          echo "Publishing version: $v"
+          case "$v" in
+            0.0.0-*)
+              echo "::error::git 历史里没有 v* tag（MinVer 回退到 $v）。先打 tag：git tag v0.3.20 && git push origin v0.3.20，再重新运行本工作流"
+              exit 1 ;;
+          esac
+
       # GitHub OIDC token 换取短期（一次性）NuGet API key，无需长期密钥
       - name: NuGet login
         uses: nuget/login@v1
@@ -39,6 +51,6 @@ jobs:
       - name: Push to NuGet.org
         run: >
           dotnet nuget push "publish/*.nupkg" "publish/*.snupkg"
-          --api-key ${{ steps.login.outputs.apiKey }}
+          --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
           --source https://api.nuget.org/v3/index.json
           --skip-duplicate
