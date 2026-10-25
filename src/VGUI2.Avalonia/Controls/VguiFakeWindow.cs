@@ -256,6 +256,12 @@ public class VguiFakeWindow : ContentControl
             if (this.GetValue(Panel.ZIndexProperty) <= max)
             {
                 this.SetValue(Panel.ZIndexProperty, max + 1);
+                // ZIndex alone only queues a renderer child-recalc that does
+                // not reliably flush on the next frame (raise was invisible
+                // until something else dirtied the tree); dirtying the panel
+                // runs SynchronizeCompositionChildVisuals in the same render
+                // pass, so the raise is visible immediately.
+                panel.InvalidateVisual();
             }
         }
     }
