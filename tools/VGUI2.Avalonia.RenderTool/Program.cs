@@ -143,6 +143,19 @@ public static class Program
 
                 var title = fake.GetVisualDescendants().OfType<Border>()
                     .First(b => b.Name == "PART_TitleBar");
+
+                // 1) click-only raise: press + release on the underdog's title
+                //    bar, no movement — must bring it above the second window.
+                var click = title.TranslatePoint(new Point(title.Bounds.Width / 2, 15), host) ?? default;
+                host.MouseDown(click, MouseButton.Left);
+                host.MouseUp(click, MouseButton.Left);
+                await Task.Delay(300);
+                Dispatcher.UIThread.RunJobs();
+                Console.WriteLine($"[fake] click-raise: fake Z = {fake.GetValue(Panel.ZIndexProperty)}, fake2 Z = {fake2.GetValue(Panel.ZIndexProperty)}, " +
+                    $"fake is last child = {canvas.Children.IndexOf(fake) == canvas.Children.Count - 1}");
+                Capture(host, Path.Combine(outDir, "fakewindow_click.png"));
+
+                // 2) drag by title bar: moves Canvas.Left/Top
                 var from = title.TranslatePoint(new Point(title.Bounds.Width / 2, 15), host) ?? default;
                 host.MouseDown(from, MouseButton.Left);
                 host.MouseMove(new Point(from.X + 60, from.Y + 40));
@@ -270,4 +283,4 @@ public static class Program
     }
 }
 
-// build seed 1792847407
+// build seed 1792847411

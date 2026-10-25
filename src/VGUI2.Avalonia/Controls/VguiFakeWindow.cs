@@ -24,7 +24,8 @@ public class VguiFakeWindow : ContentControl
         AvaloniaProperty.Register<VguiFakeWindow, string?>(nameof(Title));
 
     public static readonly StyledProperty<IImage?> IconProperty =
-        AvaloniaProperty.Register<VguiFakeWindow, IImage?>(nameof(Icon));
+        AvaloniaProperty.Register<VguiFakeWindow, IImage?>(nameof(Icon),
+            defaultValue: VguiImages.SteamIcon);
 
     public static readonly StyledProperty<object?> BottomContentProperty =
         AvaloniaProperty.Register<VguiFakeWindow, object?>(nameof(BottomContent));
@@ -60,7 +61,8 @@ public class VguiFakeWindow : ContentControl
         set => SetValue(TitleProperty, value);
     }
 
-    /// <summary>Optional 16x16 icon in the title bar.</summary>
+    /// <summary>16x16 icon in the title bar. Defaults to the Steam logo,
+    /// like the reference dialogs (<c>setIcon('vgui-icon-steam')</c>).</summary>
     public IImage? Icon
     {
         get => GetValue(IconProperty);
@@ -242,8 +244,11 @@ public class VguiFakeWindow : ContentControl
     {
         if (this.GetVisualParent() is Panel panel)
         {
-            // Max over the SIBLINGS: siblings are also at ZIndex 0 initially,
-            // and child order beats ZIndex ties, so ">= max" must still raise.
+            // Raise in BOTH stacking systems: ZIndex (the composition renderer
+            // sorts by it) and the Children order (visual/immediate order — a
+            // ZIndex-only change was observed not to reach the screen until
+            // unrelated layout activity). Children.MoveRange keeps the child
+            // attached, so focus inside the window is untouched.
             var max = 0;
             foreach (var child in panel.Children)
             {
@@ -256,11 +261,12 @@ public class VguiFakeWindow : ContentControl
             if (this.GetValue(Panel.ZIndexProperty) <= max)
             {
                 this.SetValue(Panel.ZIndexProperty, max + 1);
-                // ZIndex alone only queues a renderer child-recalc that does
-                // not reliably flush on the next frame (raise was invisible
-                // until something else dirtied the tree); dirtying the panel
-                // runs SynchronizeCompositionChildVisuals in the same render
-                // pass, so the raise is visible immediately.
+            }
+
+            var index = panel.Children.IndexOf(this);
+            if (index >= 0 && index < panel.Children.Count - 1)
+            {
+                panel.Children.Move(index, panel.Children.Count - 1);
                 panel.InvalidateVisual();
             }
         }
