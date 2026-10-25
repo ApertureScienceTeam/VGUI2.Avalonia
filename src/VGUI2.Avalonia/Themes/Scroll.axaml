@@ -116,7 +116,8 @@
     </Style>
     <Style Selector="^:horizontal /template/ LayoutTransformControl#EndGlyphRotate">
       <Setter Property="LayoutTransform">
-        <RotateTransform Angle="90" />
+        <!-- ▼ rotated -90° (counterclockwise) points right; +90° would point left -->
+        <RotateTransform Angle="-90" />
       </Setter>
     </Style>
   </ControlTheme>
