@@ -5,7 +5,19 @@
     <RootNamespace>VGUI2.Avalonia</RootNamespace>
     <AssemblyName>VGUI2.Avalonia</AssemblyName>
     <Description>Classic VGUI2 (Source engine style) control set for Avalonia 12.</Description>
-    <Version>0.3.20</Version>
+
+    <Authors>ApertureScienceTeam</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ApertureScienceTeam/VGUI2.Avalonia</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ApertureScienceTeam/VGUI2.Avalonia.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>avalonia;vgui2;source-engine;steam;controls;ui</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +26,7 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**\*.png" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

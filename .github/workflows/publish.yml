@@ -1,0 +1,46 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # NuGet.org Trusted Publishing：用 OIDC 换短期 API key
+      contents: read
+
+    steps:
+      # MinVer 从 git 历史里的 tag 推导版本号，必须拉取完整提交与 tag
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          filter: tree:0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Pack core library
+        run: >
+          dotnet pack src/VGUI2.Avalonia/VGUI2.Avalonia.csproj
+          -c Release -o publish
+          -p:ContinuousIntegrationBuild=true
+
+      # GitHub OIDC token 换取短期（一次性）NuGet API key，无需长期密钥
+      - name: NuGet login
+        uses: nuget/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Push to NuGet.org
+        run: >
+          dotnet nuget push "publish/*.nupkg" "publish/*.snupkg"
+          --api-key ${{ steps.login.outputs.apiKey }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
