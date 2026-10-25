@@ -34,6 +34,12 @@ VGUI2.Avalonia.sln
 辅助类型：`VguiFrame`（Raised/Inset 两种浮雕边框的装饰器，对应 CSS
 `.vgui-theme` / `.vgui-theme-inner`，模板内部使用）、`VguiConverters`。
 
+Canvas 内假窗口：`VguiFakeWindow : ContentControl` —— 放进 `Canvas`
+后与真窗口同观感同行为：标题栏拖动（`Canvas.Left/Top`）、四周/四角
+5px 握边缩放（`Width/Height`，受 `MinWidth/MinHeight` 约束）、点击
+任意处置顶（对应 `setFocus`）、× 关闭为隐藏自身并触发 `Closed`。
+另有 `Title` / `Icon` / `BottomContent` / `ShowCloseButton`。
+
 滚动条（`ScrollBar` / `ScrollViewer` / `Thumb` / `RepeatButton`）作为库内部
 的绘制原语随主题一并提供——18px 橄榄绿滚动条、两端箭头按钮、浮雕滑块，
 与参考实现的 `::-webkit-scrollbar` 一致。

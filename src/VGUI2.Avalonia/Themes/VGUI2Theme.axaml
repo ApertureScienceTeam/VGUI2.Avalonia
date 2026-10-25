@@ -25,6 +25,7 @@
         <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Tab.axaml" />
         <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Table.axaml" />
         <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Window.axaml" />
+        <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/FakeWindow.axaml" />
         <ResourceInclude Source="avares://VGUI2.Avalonia/Themes/Scroll.axaml" />
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

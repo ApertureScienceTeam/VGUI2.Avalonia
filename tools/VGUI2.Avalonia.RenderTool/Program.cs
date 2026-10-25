@@ -114,6 +114,56 @@ public static class Program
                     Capture(table, Path.Combine(outDir, $"table_{scaling:0.00}.png"));
                 }
             }
+            else if (mode == "fakewindow")
+            {
+                // Verify the in-canvas fake window: dragging the title bar
+                // moves Canvas.Left/Top, the SE grip resizes via Width/Height.
+                var host = new Window { Width = 560, Height = 420 };
+                var canvas = new Canvas();
+                var fake = new VguiFakeWindow
+                {
+                    Title = "Fake window",
+                    Width = 320,
+                    Height = 220,
+                };
+                Canvas.SetLeft(fake, 30);
+                Canvas.SetTop(fake, 20);
+                canvas.Children.Add(fake);
+
+                // Second window, added later so it wins on child order —
+                // clicking the first one must raise it above anyway.
+                var fake2 = new VguiFakeWindow { Title = "Console", Width = 250, Height = 150 };
+                Canvas.SetLeft(fake2, 240);
+                Canvas.SetTop(fake2, 190);
+                canvas.Children.Add(fake2);
+
+                host.Content = canvas;
+                host.Show();
+                await Task.Delay(200);
+
+                var title = fake.GetVisualDescendants().OfType<Border>()
+                    .First(b => b.Name == "PART_TitleBar");
+                var from = title.TranslatePoint(new Point(title.Bounds.Width / 2, 15), host) ?? default;
+                host.MouseDown(from, MouseButton.Left);
+                host.MouseMove(new Point(from.X + 60, from.Y + 40));
+                host.MouseUp(new Point(from.X + 60, from.Y + 40), MouseButton.Left);
+                await Task.Delay(100);
+                Dispatcher.UIThread.RunJobs();
+                Console.WriteLine($"[fake] drag: Left = {Canvas.GetLeft(fake)} (expected 90), Top = {Canvas.GetTop(fake)} (expected 60)");
+                Console.WriteLine($"[fake] raise: fake Z = {fake.GetValue(Panel.ZIndexProperty)}, fake2 Z = {fake2.GetValue(Panel.ZIndexProperty)} (expected fake > fake2)");
+
+                var grip = fake.GetVisualDescendants().OfType<Border>()
+                    .First(b => b.Name == "PART_ResizeRb");
+                var g = grip.TranslatePoint(new Point(grip.Bounds.Width / 2, grip.Bounds.Height / 2), host) ?? default;
+                host.MouseDown(g, MouseButton.Left);
+                host.MouseMove(new Point(g.X + 40, g.Y + 30));
+                host.MouseUp(new Point(g.X + 40, g.Y + 30), MouseButton.Left);
+                await Task.Delay(100);
+                Dispatcher.UIThread.RunJobs();
+                Console.WriteLine($"[fake] resize: {fake.Width}x{fake.Height} (expected 360x250)");
+
+                Capture(host, Path.Combine(outDir, "fakewindow.png"));
+            }
             else
             {
                 Capture(main, Path.Combine(outDir, "main.png"));
@@ -220,4 +270,4 @@ public static class Program
     }
 }
 
-// build seed 1792847404
+// build seed 1792847407

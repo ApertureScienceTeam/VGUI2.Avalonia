@@ -267,6 +267,45 @@
       </Canvas>
     </vgui2:VguiTabItem>
 
+    <!-- ================================================== Win -->
+    <vgui2:VguiTabItem Header="Win" Width="44">
+      <Canvas Width="520" Height="384" Background="#1A1A1A">
+
+        <vgui2:VguiFakeWindow Title="Server browser" Width="320" Height="230"
+                              Canvas.Left="24" Canvas.Top="16">
+          <Canvas Width="300" Height="180">
+            <vgui2:VguiPanel Content="Filter:" Canvas.Left="10" Canvas.Top="12" />
+            <vgui2:VguiTextBox Width="140" Height="20" Canvas.Left="50" Canvas.Top="10" />
+            <vgui2:VguiButton Content="Refresh" Width="70" Height="22" Canvas.Left="210" Canvas.Top="9" />
+            <vgui2:VguiCheckBox Content="Show empty servers" Canvas.Left="10" Canvas.Top="40" />
+            <vgui2:VguiPanel Content="拖标题栏移动，拖四边/四角缩放" Canvas.Left="10" Canvas.Top="150"
+                             Foreground="{DynamicResource VguiBrushTextDim}" />
+          </Canvas>
+          <vgui2:VguiFakeWindow.BottomContent>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Margin="0,0,8,0" Spacing="7">
+              <vgui2:VguiButton Content="连接" Width="68" Height="24" />
+              <vgui2:VguiButton Content="刷新" Width="68" Height="24" />
+            </StackPanel>
+          </vgui2:VguiFakeWindow.BottomContent>
+        </vgui2:VguiFakeWindow>
+
+        <vgui2:VguiFakeWindow Title="Console" Width="250" Height="150"
+                              Canvas.Left="240" Canvas.Top="190">
+          <Canvas>
+            <vgui2:VguiButton Content="status" Width="70" Height="22" Canvas.Left="10" Canvas.Top="10" />
+            <vgui2:VguiButton Content="quit" Width="70" Height="22" Canvas.Left="10" Canvas.Top="40" />
+          </Canvas>
+        </vgui2:VguiFakeWindow>
+
+        <TextBlock Canvas.Left="24" Canvas.Top="300" Width="300" TextWrapping="Wrap"
+                   FontSize="{DynamicResource VguiFontSizeSmall}"
+                   Foreground="{DynamicResource VguiBrushTextDim}"
+                   Text="两个假窗口叠在一起：点任意窗口把它置顶；× 关闭（隐藏）。" />
+
+      </Canvas>
+    </vgui2:VguiTabItem>
+
   </vgui2:VguiTabControl>
 
   <!-- dialog buttons, bottom-right of the window strip -->
